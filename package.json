@@ -14,7 +14,6 @@
     "@babel/core": "^7.22.1",
     "@babel/node": "^7.22.1",
     "@babel/preset-env": "^7.22.4",
-    "@babel/preset-react": "^7.22.3",
     "nodemon": "^2.0.22"
   },
   "dependencies": {
