@@ -1,1 +1,4 @@
-export const todoPost = async (req, res) => {}
+export const todoPost = (req, res) => {
+  const { todo } = req.body
+  const { todoList } = req.body
+}
