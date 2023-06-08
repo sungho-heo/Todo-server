@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import "./Todos.js";
 import "dotenv/config";
 
-mongoose.connect(process.env);
+mongoose.connect(process.env.DB_URL);
 
 const db = mongoose.connection;
 
