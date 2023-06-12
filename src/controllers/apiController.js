@@ -1,4 +1,4 @@
-import Todo from "./Todos.js";
+import Todo from "../models/Todos.js";
 
 export const getTodo = async (req, res) => {
   const data = await Todo.find({});

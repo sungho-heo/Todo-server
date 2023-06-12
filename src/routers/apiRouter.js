@@ -1,5 +1,5 @@
 import express from "express";
-import { postTodo, getTodo } from "./apiController.js";
+import { postTodo, getTodo } from "../controllers/apiController.js";
 
 const apiRouter = express.Router();
 
