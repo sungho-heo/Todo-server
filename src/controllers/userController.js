@@ -1,7 +1,10 @@
 import User from "../models/User.js";
-export const getUser = (req, res) => {
-  const user = User.findOne({ name: req.body.name });
-  res.json(user);
+export const postUser = async (req, res) => {
+  const user = await User.findOne({ name: req.body.name });
+  if (user) {
+    return res.json(user.name);
+  }
+  return res.sendStatus(404);
 };
 
 export const postJoin = async (req, res) => {
