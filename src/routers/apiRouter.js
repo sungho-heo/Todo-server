@@ -1,9 +1,10 @@
 import express from "express";
-import { postTodo, getTodo } from "../controllers/apiController.js";
+import { postTodo, getTodo, deleteTodo } from "../controllers/apiController.js";
 
 const apiRouter = express.Router();
 
+apiRouter.get("/todo", getTodo);
 apiRouter.post("/todos", postTodo);
-apiRouter.get("/todo/:id", getTodo);
+apiRouter.delete("/todo/delete", deleteTodo);
 
 export default apiRouter;

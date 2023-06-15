@@ -2,24 +2,44 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
-  // const data = await Todo.find({});
-  // res.json(data);
+  const { _id } = req.session.user;
+  const user = await User.findById(_id);
+  if (user) {
+    const todo = await Todo.findById(user.todoList);
+    if (todo) {
+      return res.json({ dataTodo: todo.todo });
+    }
+  }
 };
 
 export const postTodo = async (req, res) => {
   const { todo } = req.body;
-  const user = await User.find({ _id: req.session.user._id });
+  const { _id } = req.session.user;
+  const user = await User.findById(_id);
   try {
     if (user) {
-      const { _id } = req.session.user;
-      const newTodo = new Todo({ todo: todo, owner: _id });
       // db에 저장
-      await newTodo.save();
+      const newTodo = await Todo.create({ todo: todo, owner: _id });
       user.todoList.push(newTodo.id);
-      user.save();
+      await user.save();
       return res.sendStatus(201);
     }
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.log(error);
+    return res.status(500);
   }
+};
+
+export const deleteTodo = async (req, res) => {
+  const { text } = req.query;
+  const { _id } = req.session.user;
+  const user = await User.findById(_id);
+  if (user) {
+    const todoList = await Todo.findById(user.todoList);
+    if (todoList) {
+      await todoList.deleteOne({ text });
+      return res.status(201);
+    }
+  }
+  return res.status(404);
 };
