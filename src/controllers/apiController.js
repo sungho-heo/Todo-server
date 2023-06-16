@@ -37,9 +37,15 @@ export const deleteTodo = async (req, res) => {
   if (user) {
     const todoList = await Todo.findById(user.todoList);
     if (todoList) {
-      await todoList.deleteOne({ text });
-      return res.status(201);
+      const filter = { _id: todoList._id };
+      const newTodo = todoList.todo.filter((word) => word !== text);
+      const update = { todo: newTodo };
+      const doc = await Todo.findOneAndUpdate(filter, update, {
+        new: true,
+      });
+      await doc.save();
+      return res.sendStatus(201);
     }
   }
-  return res.status(404);
+  return res.sendStatus(404);
 };
