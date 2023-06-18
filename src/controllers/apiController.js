@@ -2,6 +2,7 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
+  // web cokie save user_id > backend session을 통해서 값을 받아옴.
   const { _id } = req.session.user;
   const user = await User.findById(_id);
   if (user) {
@@ -13,6 +14,10 @@ export const getTodo = async (req, res) => {
 };
 
 export const postTodo = async (req, res) => {
+  /*
+  todo를 생성하기전 현재 로그인된 유저확인 후 생성 
+  또한 생성된 todo db id값은 user db에 들어가게해서 어떤유저의 todo인지 알수있도록함.
+  */
   const { todo } = req.body;
   const { _id } = req.session.user;
   const user = await User.findById(_id);
@@ -31,6 +36,11 @@ export const postTodo = async (req, res) => {
 };
 
 export const deleteTodo = async (req, res) => {
+  /*
+  Todo front > todo delete 실행시 backend에서 front에서 삭제된 텍스트 값을 받아와서 
+  현재 로그인된 user안의 todo를 찾아서 해당 todoList에서 삭제된 텍스트를 찾음.
+  찾았으면 해당 text를 db에서 삭제함.
+  */
   const { text } = req.query;
   const { _id } = req.session.user;
   const user = await User.findById(_id);
