@@ -4,7 +4,7 @@ import "./models/Todos.js";
 import "./models/User.js";
 import app from "./server.js";
 
-const PORT = process.end.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 const handleServer = () => {
   console.log(`🚀 http://localhost:${PORT}/`);
