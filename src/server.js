@@ -29,9 +29,9 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.use("/api", apiRouter);
 app.use("/user", userRouter);
 
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "build/index.html"));
-});
+// app.get("/", function (req, res) {
+//   res.sendFile(path.join(__dirname, "build/index.html"));
+// });
 
 // react router를 사용하기위해서 user가 router를 입력하면 react 페이지를 보여주기위해서임.
 app.get("*", function (req, res) {
