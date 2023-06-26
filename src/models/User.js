@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: [{ type: String, required: true }],
-  todoList: [{ type: mongoose.Types.ObjectId, ref: "Todo" }],
+  todoList: { type: mongoose.Types.ObjectId, ref: "Todo" },
 });
 
 const User = mongoose.model("User", userSchema);

@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.DB_URL);
+if (process.env.NODE_ENV === "development") {
+  mongoose.connect(process.env.DB_URL_DEV);
+} else {
+  mongoose.connect(process.env.DB_URL);
+}
 
 const db = mongoose.connection;
 
