@@ -23,6 +23,17 @@ export const postTodo = async (req, res) => {
   const user = await User.findById(_id);
   try {
     if (user) {
+      if (user.todoList) {
+        // user에 todoList가 존재하는 경우 로직임.
+        const updateTodo = await Todo.findById(user.todoList);
+        const filter = { _id: updateTodo._id };
+        const update = { todo: todo };
+        const doc = await Todo.findOneAndUpdate(filter, update, {
+          new: true,
+        });
+        await doc.save();
+        return res.sendStatus(201);
+      }
       // db에 저장
       const newTodo = await Todo.create({ todo: todo, owner: _id });
       user.todoList.push(newTodo.id);
