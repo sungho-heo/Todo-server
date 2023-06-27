@@ -1,8 +1,8 @@
 import User from "../models/User.js";
 export const postUser = async (req, res) => {
   const user = await User.findOne({ name: req.body.name });
-  req.session.user = user;
   if (user) {
+    req.session.user = user;
     return res.json(user.name);
   }
   return res.sendStatus(404);
