@@ -36,7 +36,7 @@ export const postTodo = async (req, res) => {
       }
       // db에 저장
       const newTodo = await Todo.create({ todo: todo, owner: _id });
-      user.todoList.push(newTodo.id);
+      user.todoList = newTodo.id;
       await user.save();
       return res.sendStatus(201);
     }
