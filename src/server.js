@@ -22,14 +22,6 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-    cookie: {
-      // 만료 날짜 설정 (예: 1시간 후)
-      expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
-      // 최대 수명 설정 (예: 1일)
-      maxAge: 1 * 24 * 60 * 60 * 1000,
-      // 기타 쿠키 옵션 설정
-      // ...
-    },
   })
 );
 // server.js
