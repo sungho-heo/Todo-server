@@ -10,7 +10,14 @@ import cors from "cors";
 const app = express();
 
 // CORS error resolve..
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://testtodo-4iip.onrender.com",
+      "https://nimble-crumble-b2341c.netlify.app/",
+    ],
+  })
+);
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
