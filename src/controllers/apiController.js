@@ -20,6 +20,9 @@ export const postTodo = async (req, res) => {
   또한 생성된 todo db id값은 user db에 들어가게해서 어떤유저의 todo인지 알수있도록함.
   */
   const { todo } = req.body;
+  if (!req.session.user) {
+    return res.sendStatus(401);
+  }
   const { _id } = req.session.user;
   const user = await User.findById(_id);
   try {
