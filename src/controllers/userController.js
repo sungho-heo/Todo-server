@@ -4,7 +4,7 @@ export const postUser = async (req, res) => {
   if (user) {
     req.session.user = user;
     console.log(req.session.user);
-    return res..sendStatus(200);
+    return res.sendStatus(200);
   }
   return res.sendStatus(404);
 };
