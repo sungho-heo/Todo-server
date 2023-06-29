@@ -13,6 +13,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
+    origin: "https://main--nimble-crumble-b2341c.netlify.app/",
   })
 );
 app.use(morgan("dev"));
