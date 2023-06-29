@@ -21,6 +21,7 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { secure: true },
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
