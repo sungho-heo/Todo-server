@@ -52,9 +52,9 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-// 프록시 서버의 에러 처리
-proxy.on("error", (err) => {
-  console.error("Proxy Server Error:", err);
-});
+// // 프록시 서버의 에러 처리
+// proxy.on("error", (err) => {
+//   console.error("Proxy Server Error:", err);
+// });
 
 export default app;
