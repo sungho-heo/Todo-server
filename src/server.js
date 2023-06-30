@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 // proxy middleware server create.
 app.use("/api", (req, res) => {
-  proxyServer.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
+  proxy.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
 });
 
 app.get("/", function (req, res) {
@@ -45,7 +45,7 @@ app.get("*", function (req, res) {
 });
 
 // 프록시 서버의 에러 처리
-proxyServer.on("error", (err) => {
+proxy.on("error", (err) => {
   console.error("Proxy Server Error:", err);
 });
 
