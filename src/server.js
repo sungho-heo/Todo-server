@@ -12,6 +12,7 @@ const app = express();
 
 const proxy = httpProxy.createProxyServer();
 
+app.use(cors());
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -26,13 +27,6 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
-
-app.use("/api", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
 
 // proxy middleware server create.
 app.use("/api", (req, res) => {
