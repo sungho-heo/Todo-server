@@ -26,20 +26,15 @@ app.use(
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
-// server.js
-app.use("/user", userRouter);
-app.use("/api", apiRouter);
-app.use(express.static(path.join(__dirname, "../client/build")));
 
-// proxy middleware server create.
-app.use("/user", (req, res) => {
-  proxy.web(req, res, {
-    target: "https://testtodo-4iip.onrender.com",
-    changeOrigin: true,
-    cookieDomainRewrite: "",
-  });
+app.use("/api", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
 });
 
+// proxy middleware server create.
 app.use("/api", (req, res) => {
   proxy.web(req, res, {
     target: "https://testtodo-4iip.onrender.com",
@@ -47,6 +42,11 @@ app.use("/api", (req, res) => {
     cookieDomainRewrite: "",
   });
 });
+
+// server.js
+app.use("/user", userRouter);
+app.use("/api", apiRouter);
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build/index.html"));
