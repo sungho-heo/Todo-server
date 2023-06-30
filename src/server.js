@@ -13,7 +13,6 @@ const app = express();
 const proxy = httpProxy.createProxyServer();
 
 app.use(morgan("dev"));
-app.use(cors());
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
 // json향태의 데이터를 front에 보내거나 받을때 사용하기위함.
@@ -34,11 +33,19 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 
 // proxy middleware server create.
 app.use("/user", (req, res) => {
-  proxy.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
+  proxy.web(req, res, {
+    target: "https://testtodo-4iip.onrender.com",
+    changeOrigin: true,
+    cookieDomainRewrite: "",
+  });
 });
 
 app.use("/api", (req, res) => {
-  proxy.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
+  proxy.web(req, res, {
+    target: "https://testtodo-4iip.onrender.com",
+    changeOrigin: true,
+    cookieDomainRewrite: "",
+  });
 });
 
 app.get("/", function (req, res) {
