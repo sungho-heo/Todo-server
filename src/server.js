@@ -31,6 +31,10 @@ app.use("/api", apiRouter);
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 // proxy middleware server create.
+app.use("/user", (req, res) => {
+  proxy.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
+});
+
 app.use("/api", (req, res) => {
   proxy.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
 });
