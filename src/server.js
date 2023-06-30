@@ -5,6 +5,7 @@ import path from "path";
 import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
+import cors from "cors";
 import httpProxy from "http-proxy";
 
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 const proxy = httpProxy.createProxyServer();
 
 app.use(morgan("dev"));
+app.use(cors());
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
 // json향태의 데이터를 front에 보내거나 받을때 사용하기위함.
