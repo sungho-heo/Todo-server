@@ -6,13 +6,15 @@ import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
 import cors from "cors";
-import httpProxy from "http-proxy";
+import cookieParser from "cookie-parser";
+// import httpProxy from "http-proxy";
 
 const app = express();
 
-const proxy = httpProxy.createProxyServer();
+// const proxy = httpProxy.createProxyServer();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -29,13 +31,12 @@ app.use(
 );
 
 // proxy middleware server create.
-app.use("/api", (req, res) => {
-  proxy.web(req, res, {
-    target: "https://testtodo-4iip.onrender.com",
-    changeOrigin: true,
-    cookieDomainRewrite: "",
-  });
-});
+// app.use("/api", (req, res) => {
+//   proxy.web(req, res, {
+//     target: "https://testtodo-4iip.onrender.com",
+//     cookieDomainRewrite: "",
+//   });
+// });
 
 // server.js
 app.use("/user", userRouter);
