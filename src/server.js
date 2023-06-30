@@ -5,12 +5,12 @@ import path from "path";
 import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
-import cors from "cors";
+import httpProxy from "http-proxy";
 
 const app = express();
 
-// CORS error resolve..
-app.use(cors());
+const proxy = httpProxy.createProxyServer();
+
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +30,11 @@ app.use("/user", userRouter);
 app.use("/api", apiRouter);
 app.use(express.static(path.join(__dirname, "../client/build")));
 
+// proxy middleware server create.
+app.use("/api", (req, res) => {
+  proxyServer.web(req, res, { target: "https://testtodo-4iip.onrender.com" });
+});
+
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
@@ -37,6 +42,11 @@ app.get("/", function (req, res) {
 // react router를 사용하기위해서 user가 router를 입력하면 react 페이지를 보여주기위해서임.
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+// 프록시 서버의 에러 처리
+proxyServer.on("error", (err) => {
+  console.error("Proxy Server Error:", err);
 });
 
 export default app;
