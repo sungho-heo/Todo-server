@@ -19,6 +19,7 @@ export const postTodo = async (req, res) => {
   todo를 생성하기전 현재 로그인된 유저확인 후 생성 
   또한 생성된 todo db id값은 user db에 들어가게해서 어떤유저의 todo인지 알수있도록함.
   */
+  console.log(req.cookies);
   const { todo } = req.body;
   if (!req.session.user) {
     return res.sendStatus(401);
