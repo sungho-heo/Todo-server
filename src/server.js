@@ -6,12 +6,10 @@ import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(cors());
-app.use(cookieParser());
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));

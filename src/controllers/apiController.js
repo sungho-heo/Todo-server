@@ -2,7 +2,7 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
-  console.log(req.body);
+  console.log(req.cookies);
   const { _id } = req.session.user;
   const user = await User.findById(_id);
   if (user) {
