@@ -3,7 +3,8 @@ import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
   // web cokie save user_id > backend session을 통해서 값을 받아옴.
-  console.log(req.session);
+  console.log(req.cookies);
+  console.log(req.session.user);
   const { _id } = req.session.user;
   const user = await User.findById(_id);
   if (user) {
@@ -19,7 +20,6 @@ export const postTodo = async (req, res) => {
   todo를 생성하기전 현재 로그인된 유저확인 후 생성 
   또한 생성된 todo db id값은 user db에 들어가게해서 어떤유저의 todo인지 알수있도록함.
   */
-  console.log(req.cookies);
   const { todo } = req.body;
   if (!req.session.user) {
     return res.sendStatus(401);
