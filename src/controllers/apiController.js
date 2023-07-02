@@ -2,9 +2,7 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
-  // web cokie save user_id > backend session을 통해서 값을 받아옴.
-  console.log(req.cookies);
-  console.log(req.session.user);
+  console.log(req.body);
   const { _id } = req.session.user;
   const user = await User.findById(_id);
   if (user) {

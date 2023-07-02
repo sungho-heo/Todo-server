@@ -7,11 +7,8 @@ import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-// import httpProxy from "http-proxy";
 
 const app = express();
-
-// const proxy = httpProxy.createProxyServer();
 
 app.use(cors());
 app.use(cookieParser());
@@ -30,14 +27,6 @@ app.use(
   })
 );
 
-// proxy middleware server create.
-// app.use("/api", (req, res) => {
-//   proxy.web(req, res, {
-//     target: "https://testtodo-4iip.onrender.com",
-//     cookieDomainRewrite: "",
-//   });
-// });
-
 // server.js
 app.use("/user", userRouter);
 app.use("/api", apiRouter);
@@ -51,10 +40,5 @@ app.get("/", function (req, res) {
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
-
-// // 프록시 서버의 에러 처리
-// proxy.on("error", (err) => {
-//   console.error("Proxy Server Error:", err);
-// });
 
 export default app;
