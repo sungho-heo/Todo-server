@@ -9,7 +9,12 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +25,11 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
+    },
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
