@@ -13,6 +13,7 @@ export const postJoin = async (req, res) => {
   try {
     const newUser = new User({ name: name });
     // db에 저장
+    console.log(newUser);
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
