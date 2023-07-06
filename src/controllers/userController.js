@@ -3,6 +3,7 @@ export const postUser = async (req, res) => {
   const user = await User.findOne({ name: req.body.name });
   if (user) {
     req.session.user = user;
+    console.log(user);
     return res.json(user);
   }
   return res.sendStatus(404);
@@ -13,7 +14,6 @@ export const postJoin = async (req, res) => {
   try {
     const newUser = new User({ name: name });
     // db에 저장
-    console.log(newUser);
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
