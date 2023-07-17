@@ -1,0 +1,41 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: lliwer1234kr/todo-server
+          stage: main
+          yaml: >
+            name: todo-server
+
+            app: node@18
+
+            options:
+              env:
+                - name: DB_URL
+                  value: mongodb+srv://hurgj123kr:kw3PrcOCpgDGN4wk@cluster0.7s3vng2.mongodb.net
+                - name: SECRET
+                  value: dasdasdsadsadkoejfejiejgiogjdi1u382u8uijfioy84328348hfefidhsfjkdhirhjsdksahkdasjkf
+              ports: "8080"
+              install: npm install
+              start: npm run start
+              build: npm run build:server
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
