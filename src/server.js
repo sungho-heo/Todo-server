@@ -8,8 +8,12 @@ import userRouter from "./routers/userRouter.js";
 import cors from "cors";
 
 const app = express();
+const corsOptions = {
+  origin: "https://sungho-heo.github.io",
+  optionsSuccessStatus: 200,
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
