@@ -13,13 +13,12 @@ export const postJoin = async (req, res) => {
   const { name } = req.body;
   try {
     const user = User.findOne({ name: name });
-    if (user) {
-      res.sendStatus(400);
+    if (!user) {
+      const newUser = new User({ name: name });
+      // db에 저장
+      await newUser.save();
+      res.status(201).json(newUser);
     }
-    const newUser = new User({ name: name });
-    // db에 저장
-    await newUser.save();
-    res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
