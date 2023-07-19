@@ -9,12 +9,7 @@ import cors from "cors";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "https://sungho-heo.github.io/Todo/",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
