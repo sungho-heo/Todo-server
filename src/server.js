@@ -5,11 +5,19 @@ import path from "path";
 import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
-import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Cross-Origin-Embedder-Policy", "credentialless");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
