@@ -12,6 +12,10 @@ export const postUser = async (req, res) => {
 export const postJoin = async (req, res) => {
   const { name } = req.body;
   try {
+    const user = User.findOne({ name: name });
+    if (user) {
+      res.sendStatus(400);
+    }
     const newUser = new User({ name: name });
     // db에 저장
     await newUser.save();
