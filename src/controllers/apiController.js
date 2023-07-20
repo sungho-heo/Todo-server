@@ -11,6 +11,7 @@ export const getTodo = async (req, res) => {
       return res.json({ dataTodo: todo.todo });
     }
   }
+  return res.sendStatus(400);
 };
 
 export const postTodo = async (req, res) => {

@@ -13,7 +13,6 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(cors(corsOptions));
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +28,7 @@ app.use(
 );
 
 // server.js
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.use("/user", userRouter);
 app.use("/api", apiRouter);
