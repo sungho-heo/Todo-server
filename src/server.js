@@ -23,8 +23,8 @@ app.use(express.json());
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
