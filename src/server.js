@@ -10,7 +10,6 @@ import cors from "cors";
 const app = express();
 const corsOptions = {
   origin: "https://sungho-heo.github.io",
-  optionsSuccessStatus: 200,
   credentials: true,
 };
 
