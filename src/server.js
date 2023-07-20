@@ -5,14 +5,22 @@ import path from "path";
 import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import userRouter from "./routers/userRouter.js";
-import cors from "cors";
+// import cors from "cors";
 
 const app = express();
-const corsOptions = {
-  origin: "https://sungho-heo.github.io",
-  credentials: true,
-};
-
+// const corsOptions = {
+//   origin: "https://sungho-heo.github.io",
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://sungho-heo.github.io");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(morgan("dev"));
 // body data backend 에서 받기위함
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +36,6 @@ app.use(
 );
 
 // server.js
-app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "../client/build")));
 app.use("/user", userRouter);
 app.use("/api", apiRouter);
