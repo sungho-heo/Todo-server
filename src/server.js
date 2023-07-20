@@ -9,8 +9,9 @@ import cors from "cors";
 
 const app = express();
 const corsOptions = {
-  origin: ["https://sungho-heo.github.io", "https://sungho-heo.github.io/Todo"],
+  origin: ["https://sungho-heo.github.io", "http://sungho-heo.github.io"],
   optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
