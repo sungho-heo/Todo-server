@@ -3,7 +3,6 @@ export const postUser = async (req, res) => {
   const user = await User.findOne({ name: req.body.name });
   if (user) {
     req.session.user = user;
-    console.log(user);
     return res.json(user);
   }
   return res.sendStatus(404);
