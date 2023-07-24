@@ -4,7 +4,6 @@ import MongoStore from "connect-mongo";
 import path from "path";
 import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
-import userRouter from "./routers/userRouter.js";
 import cors from "cors";
 
 const app = express();
@@ -30,7 +29,6 @@ app.use(
 
 // server.js
 app.use(express.static(path.join(__dirname, "../client/build")));
-app.use("/user", userRouter);
 app.use("/api", apiRouter);
 
 app.get("/", function (req, res) {

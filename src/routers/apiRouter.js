@@ -1,19 +1,17 @@
 import express from "express";
-import { postTodo, getTodo, deleteTodo } from "../controllers/apiController.js";
+import { postUser, postJoin } from "../controllers/userController";
+import {
+  postTodo,
+  getTodo,
+  deleteTodo,
+} from "../controllers/todoController.js";
 
 const apiRouter = express.Router();
 
-apiRouter.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://sungho-heo.github.io");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-apiRouter.get("/", getTodo);
+apiRouter.post("/user/login", postUser);
+apiRouter.post("/user/join", postJoin);
+apiRouter.get("/todo", getTodo);
 apiRouter.post("/todos", postTodo);
 apiRouter.delete("/todo/delete", deleteTodo);
 
-export default apiRouter;
+export default userRouter;
