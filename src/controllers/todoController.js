@@ -4,17 +4,15 @@ import jwt from "jsonwebtoken";
 
 export const getTodo = async (req, res) => {
   console.log(req.headers);
-  const token = req.headers.Authorization;
+  const token = req.headers.authorization;
   const secretKey = process.env.SECRET;
   if (!token) {
     return res.sendStatus(400);
-    // if (todo) {
-    //   return res.json({ dataTodo: todo.todo });
-    // }
   }
   try {
     const decode = jwt.verify(token, secretKey);
     console.log(decode);
+    //  return res.json({ dataTodo: todo.todo });
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
