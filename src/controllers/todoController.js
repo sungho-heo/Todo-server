@@ -15,6 +15,9 @@ export const getTodo = async (req, res) => {
   try {
     const decode = jwt.verify(token, secretKey);
     console.log(decode);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
   }
 };
 
