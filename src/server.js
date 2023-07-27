@@ -1,8 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import MongoStore from "connect-mongo";
 import path from "path";
-import session from "express-session";
 import apiRouter from "./routers/apiRouter.js";
 import cors from "cors";
 
@@ -18,17 +16,6 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 // json향태의 데이터를 front에 보내거나 받을때 사용
 app.use(express.json());
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-    cookie: {
-      maxAge: 1000 * 60 * 5,
-    },
-  })
-);
 
 // server.js
 app.use(express.static(path.join(__dirname, "../client/build")));

@@ -1,10 +1,12 @@
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 export const postUser = async (req, res) => {
-  const user = await User.findOne({ name: req.body.name });
+  const { name } = req.body;
+  const user = await User.findOne({ name: name });
+  const secretKey = process.env.SECRET;
   if (user) {
-    req.session.user = user;
-    req.session.save();
-    return res.json(user);
+    const token = jwt.sign({ name }, secretKey);
+    return res.json({ token });
   }
   return res.sendStatus(404);
 };
