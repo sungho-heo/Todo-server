@@ -5,13 +5,14 @@ import jwt from "jsonwebtoken";
 export const getTodo = async (req, res) => {
   console.log(req.headers);
   const token = req.headers.authorization;
+  const tokenValue = token.split(" ")[1];
   const secretKey = process.env.SECRET;
   if (!token) {
     return res.sendStatus(400);
   }
   try {
-    console.log(token);
-    const decode = jwt.verify(token, secretKey);
+    console.log(tokenValue);
+    const decode = jwt.verify(tokenValue, secretKey);
     console.log(decode);
     //  return res.json({ dataTodo: todo.todo });
   } catch (error) {
