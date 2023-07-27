@@ -1,17 +1,21 @@
 import Todo from "../models/Todos.js";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 export const getTodo = async (req, res) => {
-  console.log(req.session, req.body);
-  // const { _id } = req.session.user;
-  // const user = await User.findById(_id);
-  // if (user) {
-  // const todo = await Todo.findById(user.todoList);
-  // if (todo) {
-  // return res.json({ dataTodo: todo.todo });
-  // }
-  // }
-  return res.sendStatus(400);
+  console.log(req.headers);
+  const token = req.headers.Authorization;
+  const secretKey = process.env.SECRET;
+  if (!token) {
+    return res.sendStatus(400);
+    // if (todo) {
+    //   return res.json({ dataTodo: todo.todo });
+    // }
+  }
+  try {
+    const decode = jwt.verify(token, secretKey);
+    console.log(decode);
+  }
 };
 
 export const postTodo = async (req, res) => {

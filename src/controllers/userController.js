@@ -4,8 +4,9 @@ export const postUser = async (req, res) => {
   const { name } = req.body;
   const user = await User.findOne({ name: name });
   const secretKey = process.env.SECRET;
+  const tokenTime = Math.floor(Date.now() / 1000) * 60 * 60;
   if (user) {
-    const token = jwt.sign({ name }, secretKey);
+    const token = jwt.sign({ name: name, exp: tokenTime }, secretKey);
     return res.json({ token });
   }
   return res.sendStatus(404);
