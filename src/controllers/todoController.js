@@ -2,15 +2,15 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 
 export const getTodo = async (req, res) => {
-  console.log(req.session);
-  const { _id } = req.session.user;
-  const user = await User.findById(_id);
-  if (user) {
-    const todo = await Todo.findById(user.todoList);
-    if (todo) {
-      return res.json({ dataTodo: todo.todo });
-    }
-  }
+  console.log(req.session, req.body);
+  // const { _id } = req.session.user;
+  // const user = await User.findById(_id);
+  // if (user) {
+  // const todo = await Todo.findById(user.todoList);
+  // if (todo) {
+  // return res.json({ dataTodo: todo.todo });
+  // }
+  // }
   return res.sendStatus(400);
 };
 
