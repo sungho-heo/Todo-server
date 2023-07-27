@@ -10,6 +10,7 @@ export const getTodo = async (req, res) => {
     return res.sendStatus(400);
   }
   try {
+    console.log(token);
     const decode = jwt.verify(token, secretKey);
     console.log(decode);
     //  return res.json({ dataTodo: todo.todo });
