@@ -15,7 +15,7 @@ export const postUser = async (req, res) => {
 export const postJoin = async (req, res) => {
   const { name } = req.body;
   try {
-    const user = User.findOne({ name: name });
+    const user = await User.findOne({ name: name });
     if (!user) {
       console.log(user);
       const newUser = new User({ name: name });
