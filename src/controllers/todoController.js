@@ -19,10 +19,10 @@ export const getTodo = async (req, res) => {
       return res.sendStatus(400);
     }
     const todo = Todo.findById(user.todoList);
-    if (!todo) {
-      return res.send.error({ error: "Plz create todo and save!" });
+    if (todo.todo) {
+      return res.json({ dataTodo: todo.todo });
     }
-    return res.json({ dataTodo: todo.todo });
+    return res.send.error({ error: "Plz create todo and save!" });
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
