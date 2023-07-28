@@ -74,12 +74,12 @@ export const deleteTodo = async (req, res) => {
   */
   const { text } = req.query;
   const token = req.headers.authorization;
-  console.log(token);
   const tokenValue = token.split(" ")[1];
   if (!token) {
     return res.sendStatus(400);
   }
   const decode = jwt.verify(tokenValue, secretKey);
+  console.log(decode);
   const user = User.findOne({ name: decode.name });
   if (user) {
     const todoList = await Todo.findById(user.todoList);
