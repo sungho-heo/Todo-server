@@ -2,22 +2,27 @@ import Todo from "../models/Todos.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
+const secretKey = process.env.SECRET;
+
 export const getTodo = async (req, res) => {
   console.log(req.headers);
   const token = req.headers.authorization;
   const tokenValue = token.split(" ")[1];
-  const secretKey = process.env.SECRET;
   if (!token) {
     return res.sendStatus(400);
   }
   try {
     const decode = jwt.verify(tokenValue, secretKey);
     const name = decode.name;
-    const user = User.findOne(name);
-    console.log(user);
+    const user = User.findOne({ name: name });
+    if (!user) {
+      return res.sendStatus(400);
+    }
     const todo = Todo.findById(user.todoList);
-    console.log(todo);
-    //  return res.json({ dataTodo: todo.todo });
+    if (!todo) {
+      return res.send.error({ error: "Plz create todo and save!" });
+    }
+    return res.json({ dataTodo: todo.todo });
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
@@ -29,10 +34,15 @@ export const postTodo = async (req, res) => {
   todo를 생성하기전 현재 로그인된 유저확인 후 생성 
   또한 생성된 todo db id값은 user db에 들어가게해서 어떤유저의 todo인지 알수있도록함.
   */
-  console.log(req.session);
   const { todo } = req.body;
-  const { _id } = req.session.user;
-  const user = await User.findById(_id);
+  const token = req.headers.authorization;
+  const tokenValue = token.split(" ")[1];
+  if (!token) {
+    return res.sendStatus(400);
+  }
+  const decode = jwt.verify(tokenValue, secretKey);
+  console.log(decode.name);
+  const user = await User.findone({ name: decode.name });
   try {
     if (user) {
       if (user.todoList) {
@@ -47,7 +57,7 @@ export const postTodo = async (req, res) => {
         return res.sendStatus(201);
       }
       // db에 저장
-      const newTodo = await Todo.create({ todo: todo, owner: _id });
+      const newTodo = await Todo.create({ todo: todo, owner: user._id });
       user.todoList = newTodo.id;
       await user.save();
       return res.sendStatus(201);
