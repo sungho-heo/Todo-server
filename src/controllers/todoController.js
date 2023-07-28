@@ -11,9 +11,12 @@ export const getTodo = async (req, res) => {
     return res.sendStatus(400);
   }
   try {
-    console.log(tokenValue);
     const decode = jwt.verify(tokenValue, secretKey);
-    console.log(decode);
+    const name = decode.name;
+    const user = User.findOne(name);
+    console.log(user);
+    const todo = Todo.findById(user.todoList);
+    console.log(todo);
     //  return res.json({ dataTodo: todo.todo });
   } catch (error) {
     console.log(error);
