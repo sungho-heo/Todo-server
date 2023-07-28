@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 const secretKey = process.env.SECRET;
 
 export const getTodo = async (req, res) => {
-  console.log(req.headers);
   const token = req.headers.authorization;
   const tokenValue = token.split(" ")[1];
   if (!token) {
