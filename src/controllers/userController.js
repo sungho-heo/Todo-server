@@ -17,6 +17,7 @@ export const postJoin = async (req, res) => {
   try {
     const user = User.findOne({ name: name });
     if (!user) {
+      console.log(user);
       const newUser = new User({ name: name });
       // db에 저장
       await newUser.save();
