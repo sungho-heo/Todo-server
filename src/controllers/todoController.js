@@ -41,7 +41,7 @@ export const postTodo = async (req, res) => {
   }
   const decode = jwt.verify(tokenValue, secretKey);
   console.log(decode.name);
-  const user = await User.findone({ name: decode.name });
+  const user = await User.findOne({ name: decode.name });
   try {
     if (user) {
       if (user.todoList) {
