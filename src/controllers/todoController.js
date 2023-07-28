@@ -79,20 +79,23 @@ export const deleteTodo = async (req, res) => {
     return res.sendStatus(400);
   }
   const decode = jwt.verify(tokenValue, secretKey);
-  console.log(decode);
   const user = User.findOne({ name: decode.name });
   if (user) {
-    const todoList = await Todo.findById(user.todoList);
-    if (todoList) {
-      console.log(todoList.todo);
-      const filter = { _id: todoList._id };
-      const newTodo = todoList.todo.filter((word) => word !== text);
-      const update = { todo: newTodo };
-      const doc = await Todo.findOneAndUpdate(filter, update, {
-        new: true,
-      });
-      await doc.save();
-      return res.sendStatus(201);
+    if (user.todoList) {
+      const todoList = await Todo.findById(user.todoList);
+      if (todoList) {
+        console.log(todoList.todo);
+        const filter = { _id: todoList._id };
+        const newTodo = todoList.todo.filter((word) => word !== text);
+        const update = { todo: newTodo };
+        const doc = await Todo.findOneAndUpdate(filter, update, {
+          new: true,
+        });
+        await doc.save();
+        return res.sendStatus(201);
+      }
+    } else {
+      return res.send("server not found data");
     }
   }
   return res.sendStatus(404);
