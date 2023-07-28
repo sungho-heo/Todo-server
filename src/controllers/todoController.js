@@ -40,7 +40,6 @@ export const postTodo = async (req, res) => {
     return res.sendStatus(400);
   }
   const decode = jwt.verify(tokenValue, secretKey);
-  console.log(decode.name);
   const user = await User.findOne({ name: decode.name });
   try {
     if (user) {
@@ -74,11 +73,17 @@ export const deleteTodo = async (req, res) => {
   찾았으면 해당 text를 db에서 삭제함.
   */
   const { text } = req.query;
-  const { _id } = req.session.user;
-  const user = await User.findById(_id);
+  const token = req.headers.authorization;
+  const tokenValue = token.split(" ")[1];
+  if (!token) {
+    return res.sendStatus(400);
+  }
+  const decode = jwt.verify(tokenValue, secretKey);
+  const user = User.findOne({ name: decode.name });
   if (user) {
     const todoList = await Todo.findById(user.todoList);
     if (todoList) {
+      console.log(todoList.todo);
       const filter = { _id: todoList._id };
       const newTodo = todoList.todo.filter((word) => word !== text);
       const update = { todo: newTodo };
