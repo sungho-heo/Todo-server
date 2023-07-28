@@ -22,7 +22,7 @@ export const getTodo = async (req, res) => {
     if (todo.todo) {
       return res.json({ dataTodo: todo.todo });
     }
-    return res.send.error({ error: "Plz create todo and save!" });
+    return res.send("Plz create todo and save!");
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
