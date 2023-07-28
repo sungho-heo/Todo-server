@@ -74,6 +74,7 @@ export const deleteTodo = async (req, res) => {
   */
   const { text } = req.query;
   const token = req.headers.authorization;
+  console.log(token);
   const tokenValue = token.split(" ")[1];
   if (!token) {
     return res.sendStatus(400);
