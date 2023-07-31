@@ -18,7 +18,7 @@ export const getTodo = async (req, res) => {
       return res.sendStatus(400);
     }
     const todo = Todo.findById(user.todoList);
-    console.log(todo.todo);
+    console.log(todo.obj);
     if (todo.todo) {
       return res.json({ dataTodo: todo.todo });
     }
