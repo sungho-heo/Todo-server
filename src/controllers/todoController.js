@@ -13,11 +13,11 @@ export const getTodo = async (req, res) => {
   try {
     const decode = jwt.verify(tokenValue, secretKey);
     const name = decode.name;
-    const user = User.findOne({ name: name });
+    const user = await User.findOne({ name: name });
     if (!user) {
       return res.sendStatus(400);
     }
-    const todo = Todo.findById(user.todoList);
+    const todo = await Todo.findById(user.todoList);
     console.log(todo);
     if (todo.todo) {
       return res.json({ dataTodo: todo.todo });
