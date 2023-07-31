@@ -8,7 +8,7 @@ export const getTodo = async (req, res) => {
   const token = req.headers.authorization;
   const tokenValue = token.split(" ")[1];
   if (!token) {
-    return res.sendStatus(400);
+    return res.sendStatus(401);
   }
   try {
     const decode = jwt.verify(tokenValue, secretKey);
@@ -45,6 +45,8 @@ export const postTodo = async (req, res) => {
     if (user) {
       if (user.todoList) {
         // user에 todoList가 존재하는 경우 로직임.
+        // 이부분을 적용하지 않으면 사용자는 todo가 업데이트 되는게 아니고 새롭게 계속 기존의 todo가 데이터베이스에 쌓이게됨.
+        // 해당 문제를 해결하기위해서 현 user에게 todoList를 이미 저장한게 있다면 해당 todoList에서 추가하거나 삭제한경우를 업데이트 해주기 위함.
         const updateTodo = await Todo.findById(user.todoList);
         const filter = { _id: updateTodo._id };
         const update = { todo: todo };
@@ -84,7 +86,6 @@ export const deleteTodo = async (req, res) => {
     if (user.todoList) {
       const todoList = await Todo.findById(user.todoList);
       if (todoList) {
-        console.log(todoList.todo);
         const filter = { _id: todoList._id };
         const newTodo = todoList.todo.filter((word) => word !== text);
         const update = { todo: newTodo };
